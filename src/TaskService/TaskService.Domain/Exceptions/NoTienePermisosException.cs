@@ -1,8 +1,8 @@
 ﻿namespace TaskService.Domain.Exceptions
 {
-    public class NoTienePermisosExcepcion : Exception
+    public class NoTienePermisosException : Exception
     {
-        public NoTienePermisosExcepcion()
+        public NoTienePermisosException()
             : base("No tiene permisos")
         { 
         }

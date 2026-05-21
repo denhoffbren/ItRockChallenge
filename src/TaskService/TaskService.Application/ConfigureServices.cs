@@ -1,7 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.Extensions.DependencyInjection;
 using TaskService.Application.Interface;
 using TaskService.Application.Mapping;
 using TaskService.Application.UsesCases;
+using TaskService.Application.Validator;
 
 namespace TaskService.Application
 {
@@ -11,6 +14,9 @@ namespace TaskService.Application
         {
             services.AddScoped<ITaskUsesCases, TaskUsesCases>();
             services.AddAutoMapper(typeof(MappingProfile));
+            services.AddValidatorsFromAssemblyContaining<CreatedTaskDtoValidator>();
+            services.AddValidatorsFromAssemblyContaining<UpdatedTaskDtoValidator>();
+            services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
             return services;
         }
     }

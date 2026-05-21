@@ -1,0 +1,46 @@
+services:
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver-db
+    environment:
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+
+  authservice:
+    build:
+      context: ./AuthService
+      dockerfile: AuthService.Api/Dockerfile
+    container_name: authservice-api
+    ports:
+      - "5001:8080"
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=AuthDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True"
+      JWT_SECRET_KEY: "SUPER_SECRET_KEY_ULTRA_LARGA_123456789"
+    depends_on:
+      - sqlserver
+
+  taskservice:
+    build:
+      context: ./TaskService
+      dockerfile: TaskService.Api/Dockerfile
+    container_name: taskservice-api
+    ports:
+      - "5002:8080"
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=TaskDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True"
+      JWT_SECRET_KEY: "SUPER_SECRET_KEY_ULTRA_LARGA_123456789"
+    depends_on:
+      - sqlserver
+      - authservice
+
+volumes:
+  sql_data:

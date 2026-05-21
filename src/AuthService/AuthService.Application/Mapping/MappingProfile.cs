@@ -8,7 +8,8 @@ namespace AuthService.Application.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<SignUpUserDto, User>().ReverseMap();
+            CreateMap<UserDto, User>().ReverseMap();
+            CreateMap<UserTokenDto, User>().ReverseMap();
         }
     }
 }

@@ -15,17 +15,27 @@ namespace AuthService.Api.Controllers
             this.authUsesCases = authUsesCases;
         }
 
+        /// <summary>
+        /// Crea un nuevo usuario en el sistema. 
+        /// </summary>
+        /// <param name="userDto">Datos del usuario a crear</param>
+        /// <returns>Usuario creado</returns>
         [HttpPost]
-        public async Task<IActionResult> SignUp([FromBody] SignUpUserDto signUpUserDto)
+        public async Task<IActionResult> SignUp([FromBody] UserDto userDto)
         {
-            await authUsesCases.SignUp(signUpUserDto);
-            return Ok();
+            await authUsesCases.SignUp(userDto);
+            return Ok("Usuario creado");
         }
 
+        /// <summary>
+        /// Permite ingresar al sistema
+        /// </summary>
+        /// <param name="userDto">Credenciales del usuario</param>
+        /// <returns>Usuario creado</returns>
         [HttpPost("login")]
-        public async Task<IActionResult> SignIn([FromBody] SignUpUserDto signUpUserDto)
+        public async Task<IActionResult> SignIn([FromBody] UserDto userDto)
         {
-            string response = await authUsesCases.SignIn(signUpUserDto);
+            UserTokenDto response = await authUsesCases.SignIn(userDto);
             return new JsonResult(response);
         }
     }

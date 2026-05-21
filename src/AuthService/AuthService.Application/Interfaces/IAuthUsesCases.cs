@@ -4,7 +4,7 @@ namespace AuthService.Application.Interfaces
 {
     public interface IAuthUsesCases
     {
-        Task SignUp(SignUpUserDto signUpUserDto);
-        Task<string> SignIn(SignUpUserDto signUpUserDto);
+        Task SignUp(UserDto signUpUserDto);
+        Task<UserTokenDto> SignIn(UserDto signUpUserDto);
     }
 }

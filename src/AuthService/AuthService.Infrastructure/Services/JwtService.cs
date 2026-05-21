@@ -27,8 +27,8 @@ namespace AuthService.Infrastructure.Services
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.IdUser.ToString()),
-                new Claim(JwtRegisteredClaimNames.UniqueName, user.Usuario)
+                new Claim(ClaimTypes.NameIdentifier, user.IdUser.ToString()),
+                new Claim(ClaimTypes.Name, user.Usuario)
             };
 
             var expiration = DateTime.UtcNow.AddHours(1);

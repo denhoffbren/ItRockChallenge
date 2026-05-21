@@ -11,8 +11,7 @@ namespace AuthService.Infrastructure.Persistence
             builder.HasKey(p => p.IdUser);
 
             builder.Property(p => p.IdUser)
-                .IsRequired()
-                .ValueGeneratedOnAdd();
+                .UseIdentityColumn();
 
             builder.Property(p => p.Usuario)
                 .HasMaxLength(30)

@@ -2,6 +2,7 @@
 using AuthService.Domain.Repositories;
 using AuthService.Infrastructure.Persistence.Context;
 using AuthService.Infrastructure.Persistence.Repositories;
+using AuthService.Infrastructure.Persistence.Seeder;
 using AuthService.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +43,7 @@ namespace AuthService.Infrastructure
             });
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IJwtService, JwtService>();
+            services.AddScoped<Seeder>();
 
             return services;
         }

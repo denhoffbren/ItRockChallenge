@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 using TaskService.Domain.Entities;
 
 namespace TaskService.Infrastructure.Persistence
@@ -14,13 +15,13 @@ namespace TaskService.Infrastructure.Persistence
                 .IsRequired()
                 .ValueGeneratedOnAdd();
 
-            builder.Property(p => p.Tittle)
-                .HasMaxLength(50)
+            builder.Property(p => p.Title)
+                .HasMaxLength(200)
                 .IsRequired();
 
             builder.Property(p => p.Description)
-                .HasMaxLength(100)
-                .IsRequired();
+                .HasMaxLength(200)
+                .IsRequired(false);
 
             builder.Property(p => p.Completed)
                 .IsRequired()
@@ -31,6 +32,10 @@ namespace TaskService.Infrastructure.Persistence
 
             builder.Property(p => p.CreatedAt)
                 .IsRequired();
+
+            builder.Property(p => p.Active)
+                .HasDefaultValue(true)
+                .ValueGeneratedOnAdd();
         }
     }
 }

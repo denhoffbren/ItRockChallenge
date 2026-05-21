@@ -20,26 +20,52 @@ namespace TaskService.Infrastructure.Persistence.Repositories
             await applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteTask(Tarea task)
+        public async Task CreateTasks(List<Tarea> tasks)
         {
-            applicationDbContext.Tasks.Remove(task);
+            applicationDbContext.Tasks.AddRange(tasks);
             await applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task<List<Tarea>> GetMyTask(string idUser)
+        public async Task DeleteTask(Tarea task)
         {
-            return await applicationDbContext.Tasks.Where(p => p.UserId == idUser).ToListAsync();
+            task.Active = false;
+            applicationDbContext.Tasks.Update(task);
+            await applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<Tarea>> GetTasksByUserId(string idUser, int? pageNumber, int? pageSize)
+        {
+            if (pageNumber is null && pageSize is null)
+            {
+                return await applicationDbContext.Tasks.Where(p => p.UserId == idUser && p.Active).ToListAsync();
+            }
+            return await applicationDbContext.Tasks
+                .Where(p => p.UserId == idUser && p.Active)
+                .OrderBy(p => p.Id)
+                .Skip((pageNumber.Value - 1) * pageSize.Value)
+                .Take(pageSize.Value)
+                .ToListAsync();
         }
 
         public async Task<Tarea?> GetTaskById(Guid id)
         {
-            return await applicationDbContext.Tasks.SingleOrDefaultAsync(p => p.Id == id);
+            return await applicationDbContext.Tasks.SingleOrDefaultAsync(p => p.Id == id && p.Active);
         }
 
         public async Task UpdateTask(Tarea task)
         {
             applicationDbContext.Tasks.Update(task);
             await applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<Tarea>> GetPagedByUserId(int pageNumber, int pageSize, string idUser)
+        {
+            return await applicationDbContext.Tasks
+                .Where(p => p.UserId == idUser && p.Active)
+                .OrderBy(p => p.Id)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
         }
     }
 }

@@ -26,7 +26,7 @@ namespace AuthService.Application.UsesCases
             this.mapper = mapper;
         }
 
-        public async Task<string> SignIn(SignUpUserDto signUpUserDto)
+        public async Task<UserTokenDto> SignIn(UserDto signUpUserDto)
         {
             User? user = await userRepository.GetByUsuario(signUpUserDto.Usuario);
             if (user is null)
@@ -39,11 +39,10 @@ namespace AuthService.Application.UsesCases
             {
                 throw new CredencialesInvalidasException();
             }
-            user = mapper.Map<User>(signUpUserDto); 
-            return jwtService.GenerateToken(user);
+            return new() { Usuario = user.Usuario, Token = jwtService.GenerateToken(user) };
         }
 
-        public async Task SignUp(SignUpUserDto signUpUserDto)
+        public async Task SignUp(UserDto signUpUserDto)
         {
             User? user = await userRepository.GetByUsuario(signUpUserDto.Usuario);
             if (user is not null)

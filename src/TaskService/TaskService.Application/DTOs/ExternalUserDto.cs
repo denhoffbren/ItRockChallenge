@@ -1,0 +1,9 @@
+﻿namespace TaskService.Application.DTOs
+{
+    public class ExternalTaskDto
+    {
+        public int userId { get; set; }
+        public string title { get; set; }
+        public bool completed { get; set; }
+    }
+}
