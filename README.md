@@ -26,7 +26,6 @@ TaskService
 ├── TaskService.Application
 ├── TaskService.Domain
 ├── TaskService.Infrastructure
-└── TaskService.Tests
 ```
 
 ## Capas
@@ -92,6 +91,9 @@ git clone https://github.com/denhoffbren/ItRockChallenge.git
 cd ItRockChallenge
 ```
 
+```bash
+cd src
+```
 ## 3. Levantar contenedores
 
 ```bash
@@ -105,7 +107,8 @@ docker compose up --build
 Una vez levantado el proyecto:
 
 ```text
-http://localhost:8080/swagger
+http://localhost:5001/swagger
+http://localhost:5002/swagger
 ```
 
 ---
