@@ -141,6 +141,8 @@ http://localhost:5002/swagger
 - Eliminación lógica para preservar la integridad y trazabilidad de los datos.
 - Uso de interfaces e inyección de dependencias para desacoplamiento.
 - Docker para simplificar la ejecución del proyecto.
+- La autenticación fue separada en un servicio independiente para simular una arquitectura más cercana a escenarios reales, permitiendo mayor escalabilidad y reutilización por otros servicios.
+- Se centralizó el manejo de errores mediante un middleware global utilizando el patrón Middleware para unificar respuestas y evitar lógica repetida en los controllers.
 
 ---
 
